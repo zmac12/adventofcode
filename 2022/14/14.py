@@ -2,9 +2,8 @@ from typing import TypeAlias
 
 Coordinate: TypeAlias = tuple[int, int]
 
-max_x, max_y, min_x, min_y = 0
-
 def convert_to_coord_add_to_set(coord_list:list[str], container:set):
+    max_x, max_y, min_x, min_y = 0,0,0,0
     for idx,coord in enumerate(coord_list):
         x,y = int(coord.split(',')[0]), int(coord.split(',')[1])
         if x > max_x:
@@ -36,6 +35,7 @@ def convert_to_coord_add_to_set(coord_list:list[str], container:set):
                 container.add((constant, num))
 
 def simulate_sand(container:set) -> int:
+    max_x, max_y, min_x, min_y = 500,500,0,0
     start_x, start_y = 500, 0
         #drop sand
     filled_this_iteration = False
@@ -53,14 +53,12 @@ def simulate_sand(container:set) -> int:
 
         container.add(sand_location)
         filled_this_iteration == True
-    
-    return 
 
 
 def main():
     ans = 0
     with open('input.txt', 'r') as file:
-        corners_pre_split = file.read().split('\n')
+        corners_pre_split = file.read().strip().split('\n')
 
     corners = [line.split(' -> ') for line in corners_pre_split]
     
