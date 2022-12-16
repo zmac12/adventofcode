@@ -42,19 +42,27 @@ def simulate_sand(container:set):
     while abyss == False:
         #drop sand
         sand_location = (start_x, start_y)
-        while sand_location[0] <= max_x and sand_location[1] <= max_y and sand_location[0] >= min_x and sand_location[1] >= min_y:
-            if sand_location in container:
+        filled_this_iteration = False
+        while sand_location[0] <= max_x and sand_location[1] <= max_y and sand_location[0] >= min_x and sand_location[1] >= min_y and filled_this_iteration == False:
+            if (sand_location[0], sand_location[1] + 1) not in container:
+                sand_location = (sand_location[0], sand_location[1] + 1)
+                continue
+            if (sand_location[0] - 1, sand_location[1] + 1) not in container:
                 sand_location = (sand_location[0] - 1, sand_location[1] + 1)
-            else:
-                container.add((sand_location[0], sand_location[1]))
+                continue
+            if (sand_location[0] + 1, sand_location[1] + 1) not in container:
+                sand_location = (sand_location[0] + 1, sand_location[1] + 1)
+                continue
+            container.add(sand_location)
+            filled_this_iteration == True
         abyss == True
 
 
 def main():
     with open('input.txt', 'r') as file:
-        corners_pre = file.read().split('\n')
+        corners_pre_split = file.read().split('\n')
 
-    corners = [line.split(' -> ') for line in corners_pre]
+    corners = [line.split(' -> ') for line in corners_pre_split]
     
     filled = set()
     for list_of_corners in corners:
