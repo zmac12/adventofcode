@@ -35,30 +35,30 @@ def convert_to_coord_add_to_set(coord_list:list[str], container:set):
             elif mode == 'vertical':
                 container.add((constant, num))
 
-def simulate_sand(container:set):
+def simulate_sand(container:set) -> int:
     start_x, start_y = 500, 0
-
-    abyss = False
-    while abyss == False:
         #drop sand
-        sand_location = (start_x, start_y)
-        filled_this_iteration = False
-        while sand_location[0] <= max_x and sand_location[1] <= max_y and sand_location[0] >= min_x and sand_location[1] >= min_y and filled_this_iteration == False:
-            if (sand_location[0], sand_location[1] + 1) not in container:
-                sand_location = (sand_location[0], sand_location[1] + 1)
-                continue
-            if (sand_location[0] - 1, sand_location[1] + 1) not in container:
-                sand_location = (sand_location[0] - 1, sand_location[1] + 1)
-                continue
-            if (sand_location[0] + 1, sand_location[1] + 1) not in container:
-                sand_location = (sand_location[0] + 1, sand_location[1] + 1)
-                continue
-            container.add(sand_location)
-            filled_this_iteration == True
-        abyss == True
+    filled_this_iteration = False
+    sand_location = (start_x, start_y)
+    while sand_location[0] <= max_x and sand_location[1] <= max_y and sand_location[0] >= min_x and sand_location[1] >= min_y and filled_this_iteration == False:
+        if (sand_location[0], sand_location[1] + 1) not in container:
+            sand_location = (sand_location[0], sand_location[1] + 1)
+            continue
+        if (sand_location[0] - 1, sand_location[1] + 1) not in container:
+            sand_location = (sand_location[0] - 1, sand_location[1] + 1)
+            continue
+        if (sand_location[0] + 1, sand_location[1] + 1) not in container:
+            sand_location = (sand_location[0] + 1, sand_location[1] + 1)
+            continue
+
+        container.add(sand_location)
+        filled_this_iteration == True
+    
+    return 
 
 
 def main():
+    ans = 0
     with open('input.txt', 'r') as file:
         corners_pre_split = file.read().split('\n')
 
@@ -68,7 +68,15 @@ def main():
     for list_of_corners in corners:
         convert_to_coord_add_to_set(list_of_corners, filled)
     
-    simulate_sand(filled)
+    while True:
+        res = simulate_sand(filled)
+
+        if not res:
+            break
+
+        ans += 1
+    
+    print(ans)
     
 
 if __name__ == '__main__':
