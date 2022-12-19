@@ -1,5 +1,5 @@
 with open('input.txt', 'r') as file:
-    games = file.read()
+    games = file.read().split('\n')
 
 rock = ['A', 'X', 1]
 paper = ['B', 'Y', 2]
@@ -9,3 +9,5 @@ draw = 3
 loss = 0
 
 for game in games:
+    plays = game.split(' ')
+    
