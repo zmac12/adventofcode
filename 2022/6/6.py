@@ -2,10 +2,11 @@ with open('input.txt', 'r') as file:
     buffer = list(file.read())
 
 startingIdx = 0
-currentValues = set()
 idx = 0
 while idx < len(buffer) - 4:
-    if buffer[idx] in currentValues:
-        startingIdx = idx
-        currentValues
+    s = buffer[idx:(idx + 4)]
+    if len(set(s)) == 4:
+        print(idx + 4)
+        break
     idx += 1
+
